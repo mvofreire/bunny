@@ -1,6 +1,6 @@
 # Bunny test
 
-I'm very happy for doing this test, because i could apply some ideas and techniques of microservices. The diagram of this architecture is on the file `/diagram.pdf`
+I'm very happy for doing this test, because I could apply some ideas and techniques of microservices. The diagram of this architecture is on the file `/diagram.pdf`
 
 ## Requirements
 
