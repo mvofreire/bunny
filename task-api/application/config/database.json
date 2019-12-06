@@ -1,0 +1,17 @@
+{
+    "development": {
+        "dialect": "sqlite",
+        "storage": "mockDatabase/database.sqlite"
+    },
+    "test": {
+        "dialect": "sqlite",
+        "storage": "mockDatabase/database.test.sqlite"
+    },
+    "production": {
+        "username": "bunny_studio_user",
+        "password": "bunny_studio_password",
+        "database": "bunny_studio",
+        "host": "database",
+        "dialect": "postgres"
+    }
+}

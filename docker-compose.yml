@@ -1,0 +1,84 @@
+version: "2"
+services:
+  database:
+    container_name: bunny-db
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - default
+      - backend
+    environment:
+      POSTGRES_USER: bunny_studio_user
+      POSTGRES_PASSWORD: bunny_studio_password
+      POSTGRES_DB: bunny_studio
+
+  gateway-api:
+    container_name: bunny-gateway-api
+    image: nginx
+    volumes:
+      - ./gateway/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - client
+      - users
+      - tasks
+    networks:
+      - frontend
+      - backend
+    environment:
+      - NGINX_PORT=80
+    command: /bin/bash -c "exec nginx -g 'daemon off;'"
+
+  client:
+    container_name: bunny-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    networks:
+      - frontend
+    volumes:
+      - "/usr/src/app/node_modules"
+
+  users:
+    container_name: bunny-users-services
+    build:
+      context: ./user-api
+      dockerfile: Dockerfile
+    volumes:
+      - "/usr/src/app/node_modules"
+    ports:
+      - "3001:3001"
+    networks:
+      - backend
+    links:
+      - database
+    environment:
+      PORT: 3001
+
+  tasks:
+    container_name: bunny-tasks-services
+    build:
+      context: ./task-api
+      dockerfile: Dockerfile
+    volumes:
+      - "/usr/src/app/node_modules"
+    ports:
+      - "3002:3002"
+    networks:
+      - backend
+    links:
+      - database
+    environment:
+      PORT: 3002
+
+networks:
+  backend:
+  frontend:
+
+volumes:
+  bunny_studio_volume:

@@ -1,0 +1,71 @@
+{
+    "name": "obah-api",
+    "version": "1.1.6",
+    "main": "dist/server.js",
+    "license": "MIT",
+    "scripts": {
+        "prestart": "cross-env NODE_ENV=production sequelize db:migrate",
+        "start": "cross-env NODE_ENV=production node dist/server.js",
+        "predev": "cross-env NODE_ENV=development sequelize db:migrate",
+        "dev": "cross-env NODE_ENV=development nodemon -L --ignore __tests__ --exec babel-node application/server.js",
+        "clear": "rimraf dist",
+        "pretest": "cross-env NODE_ENV=test sequelize db:migrate",
+        "test": "cross-env NODE_ENV=test jest",
+        "posttest": "cross-env NODE_ENV=test sequelize db:migrate:undo:all",
+        "build": "yarn clear && ./node_modules/.bin/babel ./application --out-dir ./dist --source-maps --copy-files"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier --write",
+            "yarn test",
+            "git add"
+        ]
+    },
+    "dependencies": {
+        "@babel/polyfill": "^7.4.4",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.18.3",
+        "cors": "^2.8.5",
+        "cross-env": "^5.2.0",
+        "express": "^4.16.4",
+        "http": "^0.0.0",
+        "jsonwebtoken": "^8.5.1",
+        "pg": "^7.12.1",
+        "pg-hstore": "^2.3.3",
+        "sequelize": "^5.19.0",
+        "socket.io": "^2.2.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.7.4",
+        "@babel/preset-env": "^7.7.4",
+        "babel-cli": "^6.26.0",
+        "babel-eslint": "^8.2.6",
+        "babel-jest": "^24.9.0",
+        "babel-plugin-module-alias": "^1.6.0",
+        "babel-plugin-module-resolver": "^3.2.0",
+        "babel-plugin-transform-class-properties": "^6.24.1",
+        "babel-plugin-transform-decorators-legacy": "^1.3.5",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "eslint": "^5.1.0",
+        "gulp": "^3.9.1",
+        "gulp-rimraf": "^0.2.2",
+        "gulp-vinyl-zip": "^2.1.0",
+        "husky": "^3.0.9",
+        "jest": "^24.9.0",
+        "lint-staged": "^9.4.2",
+        "nodemon": "^1.17.5",
+        "prettier": "^1.18.2",
+        "rimraf": "^2.6.2",
+        "sequelize-cli": "^5.5.1",
+        "sqlite3": "^4.1.1",
+        "supertest": "^4.0.2"
+    }
+}
