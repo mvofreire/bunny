@@ -1,5 +1,5 @@
 {
-    "name": "obah-api",
+    "name": "task-api",
     "version": "1.1.6",
     "main": "dist/server.js",
     "license": "MIT",
